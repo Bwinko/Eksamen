@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Babalui123
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: andreas@eksamen.no
+      PGADMIN_DEFAULT_PASSWORD: Babalui123
+    ports:
+      - "3001:80"
