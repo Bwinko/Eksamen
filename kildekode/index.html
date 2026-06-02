@@ -6,17 +6,40 @@
 <body>
     <h1>Produkter</h1>
     <div id="produkter"></div>
+    <div id="detaljer"></div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bryllup</title>
+</head>
+<body>
+    <div id="produkter"></div>
+    <div id="detaljer"></div>
 
     <script>
-        // Henter produkter fra Node og viser dem
         fetch('/produkter')
             .then(res => res.json())
             .then(data => {
                 data.forEach(p => {
                     document.getElementById('produkter').innerHTML += 
-                        `<p>${p.navn} - ${p.pris}kr</p>`;
+                        `<p>${p.navn} - ${p.pris}kr 
+                        <button onclick="vis('${p.navn}', '${p.beskrivelse}', ${p.pris})">Detaljer</button></p>`;
                 });
             });
+
+        // viser detaljer i div-en under listen
+        function vis(navn, beskrivelse, pris) {
+            document.getElementById('detaljer').innerHTML = 
+                `<h2>${navn}</h2><p>${beskrivelse}</p><p>${pris}kr</p>`;
+        }
+
+        function vis(navn, beskrivelse, pris) {
+    document.getElementById('detaljer').innerHTML = 
+        `<h2>${navn}</h2><p>${beskrivelse}</p><p>${pris}kr</p>
+        <button onclick="document.getElementById('detaljer').innerHTML=''">Lukk</button>`;
+}
     </script>
+</body>
+</html>
 </body>
 </html>

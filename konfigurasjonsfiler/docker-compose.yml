@@ -1,17 +1,29 @@
 services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: Babalui123
+  web:
+    image: node:18                          # bruker node versjon 18
+    working_dir: /app                       # mappe inne i containeren
+    volumes:
+      - .:/app                              # kobler prosjektmappen din til containeren
+    command: node kildekode/index.js        # starter serveren
     ports:
-      - "5432:5432"
+      - "3000:3000"                         # kundeside, åpen for alle
+    networks:
+      - public                              # koblet til public-nettverket
 
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: andreas@eksamen.no
-      PGADMIN_DEFAULT_PASSWORD: Babalui123
+  admin:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: node kildekode/index.js
     ports:
-      - "3001:80"
+      - "127.0.0.1:3001:3000"              # kun tilgjengelig lokalt på maskinen
+    networks:
+      - internal                            # koblet til internal-nettverket
+
+networks:
+  public:
+    driver: bridge                          # vanlig nettverk, åpent utenfra
+  internal:
+    driver: bridge                          # internt nettverk, kun lokalt
+    internal: true                          # blokkerer ekstern trafikk
