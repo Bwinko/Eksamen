@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Admin</h1>
+
+    <!-- Legg til produkt -->
+    <h2>Legg til produkt</h2>
+    <input id="navn" placeholder="Navn">
+    <input id="beskrivelse" placeholder="Beskrivelse">
+    <input id="pris" placeholder="Pris">
+    <input id="kategori_id" placeholder="Kategori ID">
+    <button onclick="leggTil()">Legg til</button>
+
+    <!-- Produktliste -->
+    <h2>Produkter</h2>
+    <div id="produkter"></div>
+
+    <script>
+        // Henter og viser alle produkter
+        function hentProdukter() {
+            fetch('/produkter')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('produkter').innerHTML = '';
+                    data.forEach(p => {
+                        document.getElementById('produkter').innerHTML += 
+                            `<p>${p.navn} - ${p.pris}kr 
+                            <button onclick="slett(${p.id})">Slett</button></p>`;
+                    });
+                });
+        }
+
+        // Legger til nytt produkt
+        function leggTil() {
+            fetch('/admin/produkter', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    navn: document.getElementById('navn').value,
+                    beskrivelse: document.getElementById('beskrivelse').value,
+                    pris: document.getElementById('pris').value,
+                    kategori_id: document.getElementById('kategori_id').value
+                })
+            }).then(() => hentProdukter());
+        }
+
+        // Sletter produkt
+        function slett(id) {
+            fetch('/admin/produkter/' + id, {
+                method: 'DELETE'
+            }).then(() => hentProdukter());
+        }
+
+        hentProdukter();
+    </script>
+</body>
+</html>

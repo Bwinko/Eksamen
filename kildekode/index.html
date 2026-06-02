@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bryllup</title>
+</head>
+<body>
+    <h1>Produkter</h1>
+    <div id="produkter"></div>
+
+    <script>
+        // Henter produkter fra Node og viser dem
+        fetch('/produkter')
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(p => {
+                    document.getElementById('produkter').innerHTML += 
+                        `<p>${p.navn} - ${p.pris}kr</p>`;
+                });
+            });
+    </script>
+</body>
+</html>
