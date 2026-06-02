@@ -1,30 +1,29 @@
 services:
   web:
-    image: node:20
-    working_dir: /app
+    image: node:20                        # bruker node versjon 20
+    working_dir: /app                     # arbeidsmappe inne i containeren
     volumes:
-      - C:/Eksamen:/app                        
-    command: sh -c "rm -rf node_modules && npm install && node kildekode/index.js"
-
+      - C:/Eksamen:/app                   # kobler prosjektmappen til containeren
+    command: sh -c "rm -rf node_modules && npm install && node kildekode/index.js" # installerer pakker og starter serveren
     ports:
-      - "3000:3000"
+      - "3000:3000"                       # port 3000 er åpen for alle (kundeside)
     networks:
-      - public
+      - public                            # koblet til public nettverket
 
   admin:
-    image: node:18
-    working_dir: /app
+    image: node:20                        # bruker node versjon 20
+    working_dir: /app                     # arbeidsmappe inne i containeren
     volumes:
-      - ../:/app                          
-    command: sh -c "rm -rf node_modules && npm install && node kildekode/index.js"
+    - C:/Eksamen:/app                        # kobler prosjektmappen til containeren
+    command: sh -c "rm -rf node_modules && npm install && node kildekode/index.js" # installerer pakker og starter serveren
     ports:
-      - "127.0.0.1:3001:3000"
+      - "127.0.0.1:3001:3000"            # kun tilgjengelig lokalt, ikke utenfra (brannmur)
     networks:
-      - internal
+      - internal                          # koblet til internal-nettverket
 
 networks:
   public:
-    driver: bridge
+    driver: bridge                        # vanlig nettverk, tilgjengelig utenfra
   internal:
-    driver: bridge
-    internal: true
+    driver: bridge                        # internt nettverk
+    internal: true                        # blokkerer all ekstern trafikk

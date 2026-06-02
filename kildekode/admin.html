@@ -2,24 +2,25 @@
 <html>
 <head>
     <title>Admin</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Admin</h1>
+    <div class="container">
+        <h1>Admin</h1>
 
-    <!-- Legg til produkt -->
-    <h2>Legg til produkt</h2>
-    <input id="navn" placeholder="Navn">
-    <input id="beskrivelse" placeholder="Beskrivelse">
-    <input id="pris" placeholder="Pris">
-    <input id="kategori_id" placeholder="Kategori ID">
-    <button onclick="leggTil()">Legg til</button>
+        <h2>Legg til produkt</h2>
+        <input id="navn" placeholder="Navn">
+        <input id="beskrivelse" placeholder="Beskrivelse">
+        <input id="pris" placeholder="Pris">
+        <input id="kategori_id" placeholder="Kategori ID">
+        <button onclick="leggTil()">Legg til</button>
 
-    <!-- Produktliste -->
-    <h2>Produkter</h2>
-    <div id="produkter"></div>
+        <h2>Produkter</h2>
+        <div id="produkter"></div><!-- produktliste med slett-knapp -->
+    </div>
 
     <script>
-        // Henter og viser alle produkter
+        // henter og viser alle produkter
         function hentProdukter() {
             fetch('/produkter')
                 .then(res => res.json())
@@ -33,7 +34,7 @@
                 });
         }
 
-        // Legger til nytt produkt
+        // legger til nytt produkt i databasen
         function leggTil() {
             fetch('/admin/produkter', {
                 method: 'POST',
@@ -47,7 +48,7 @@
             }).then(() => hentProdukter());
         }
 
-        // Sletter produkt
+        // sletter produkt basert på id
         function slett(id) {
             fetch('/admin/produkter/' + id, {
                 method: 'DELETE'

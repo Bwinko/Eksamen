@@ -1,0 +1,45 @@
+/* grunnleggende oppsett for hele siden */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f5f0;
+    margin: 0;
+    padding: 20px;
+}
+
+/* container som sentrerer innholdet */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* overskrift */
+h1 {
+    color: #986557;
+    text-align: center;
+}
+
+h2 {
+    color: #986557;
+}
+
+/* knapper */
+button {
+    background-color: #986557;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* input felt */
+input {
+    padding: 6px;
+    margin: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

@@ -2,44 +2,35 @@
 <html>
 <head>
     <title>Bryllup</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Produkter</h1>
-    <div id="produkter"></div>
-    <div id="detaljer"></div>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Bryllup</title>
-</head>
-<body>
-    <div id="produkter"></div>
-    <div id="detaljer"></div>
+    <div class="container">
+        <h1>Produkter</h1>
+        <div id="produkter"></div><!-- liste over produkter -->
+        <div id="detaljer"></div><!-- detaljer vises her når man klikker -->
+    </div>
 
     <script>
-        fetch('/produkter')
-            .then(res => res.json())
-            .then(data => {
-                data.forEach(p => {
-                    document.getElementById('produkter').innerHTML += 
-                        `<p>${p.navn} - ${p.pris}kr 
-                        <button onclick="vis('${p.navn}', '${p.beskrivelse}', ${p.pris})">Detaljer</button></p>`;
-                });
+        // henter alle produkter fra serveren og viser dem
+        async function hent() {
+            const res = await fetch('/produkter');
+            const data = await res.json();
+            data.forEach(p => {
+                document.getElementById('produkter').innerHTML += 
+                    `<p>${p.navn} - ${p.pris}kr 
+                    <button onclick="vis('${p.navn}', '${p.beskrivelse}', ${p.pris})">Detaljer</button></p>`;
             });
-
-        // viser detaljer i div-en under listen
-        function vis(navn, beskrivelse, pris) {
-            document.getElementById('detaljer').innerHTML = 
-                `<h2>${navn}</h2><p>${beskrivelse}</p><p>${pris}kr</p>`;
         }
 
+        // viser detaljer for valgt produkt
         function vis(navn, beskrivelse, pris) {
-    document.getElementById('detaljer').innerHTML = 
-        `<h2>${navn}</h2><p>${beskrivelse}</p><p>${pris}kr</p>
-        <button onclick="document.getElementById('detaljer').innerHTML=''">Lukk</button>`;
-}
+            document.getElementById('detaljer').innerHTML = 
+                `<h2>${navn}</h2><p>${beskrivelse}</p><p>${pris}kr</p>
+                <button onclick="document.getElementById('detaljer').innerHTML=''">Lukk</button>`;
+        }
+
+        hent();
     </script>
-</body>
-</html>
 </body>
 </html>
