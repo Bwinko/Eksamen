@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS test (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    navn TEXT NOT NULL
+);
+
+INSERT INTO test (navn) VALUES ('test');
